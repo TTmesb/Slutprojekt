@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.util.Calendar;
+
 /**
  * Created 2021-04-27
  *
@@ -19,9 +22,16 @@ public class Main {
         //Delar av framen
 
         JLabel nummer = new JLabel("",SwingConstants.CENTER);
-        LocalDate hej = LocalDate.now();
-        nummer.setText(hej.toString());
-        frame.getContentPane().add(nummer);
+        LocalDate datum = LocalDate.now();
+        nummer.setPreferredSize(new Dimension(350,350));
+        nummer.setFont(new Font("Arial, serif", Font.BOLD,260));
+        nummer.setForeground(new Color(28, 123, 183));
+        int vecka = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1;
+
+
+        nummer.setText(String.valueOf(vecka));
+        frame.getContentPane().setBackground(new Color(144, 192, 222));
+        frame.add(nummer);
 
         frame.pack();
         frame.setVisible(true);
