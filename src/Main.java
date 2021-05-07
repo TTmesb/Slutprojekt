@@ -21,18 +21,26 @@ public class Main {
 
         //Delar av framen
 
-        JLabel nummer = new JLabel("",SwingConstants.CENTER);
+        JLabel vecka = new JLabel("",SwingConstants.CENTER);
+        JLabel manad = new JLabel("",SwingConstants.RIGHT);
+        JLabel år = new JLabel("",SwingConstants.LEFT);
+
         LocalDate datum = LocalDate.now();
-        nummer.setPreferredSize(new Dimension(350,350));
-        nummer.setFont(new Font("Arial, serif", Font.BOLD,260));
-        nummer.setForeground(new Color(28, 123, 183));
-        int vecka = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1;
+        vecka.setPreferredSize(new Dimension(350,350));
+        vecka.setFont(new Font("Arial, serif", Font.BOLD,260));
+        vecka.setForeground(new Color(28, 123, 183));
 
+        manad.setForeground(new Color(28, 123, 183));
+        manad.setFont(new Font("Arial, serif", Font.BOLD,260));
+        manad.setPreferredSize(new Dimension(100,100));
+        int veckanu = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1;
+        int manadnu = datum.get(ChronoField.DAY_OF_MONTH);
+        vecka.setText(String.valueOf(veckanu));
+        manad.setText(String.valueOf(manadnu));
+        frame.add(vecka);
+        frame.add(manad);
 
-        nummer.setText(String.valueOf(vecka));
         frame.getContentPane().setBackground(new Color(144, 192, 222));
-        frame.add(nummer);
-
         frame.pack();
         frame.setVisible(true);
 
