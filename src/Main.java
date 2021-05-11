@@ -54,13 +54,11 @@ public class Main {
             });
 
         }
-
+// Funkar typ men väldigt lång delay
             @Override
             public void paintComponent(final Graphics g) {
                 super.paintComponent(g);
                 stars.stream().forEach((e)->e.render(g));
-                g.setColor(Color.black);
-                g.fillOval(0,0,40,40);
 
             }
 

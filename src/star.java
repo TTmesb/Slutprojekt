@@ -10,6 +10,7 @@ public class star {
     }
 
     public void render(Graphics g) {
-
+        g.fillOval(x,y,40,40);
+        g.setColor(Color.black);
     }
 }
