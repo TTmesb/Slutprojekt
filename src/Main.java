@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.LinkedList;
@@ -31,9 +32,10 @@ public class Main {
         vecka.setFont(new Font("Arial, serif", Font.BOLD,260));
         vecka.setForeground(new Color(28, 123, 183));
 
-        int veckanu = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+        int veckanu = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1; //ibland behövs -1 och ibland inte??
 
         vecka.setText(String.valueOf(veckanu));
+
         panel.add(vecka);
         frame.add(panel);
         // frame.add(vecka);
@@ -43,9 +45,10 @@ public class Main {
     }
         public static class MyPanel extends JPanel {
         private LinkedList<grafik> stars;
+        private grafik gubben;
         public MyPanel(){
             stars = new LinkedList<>();
-
+            gubben = new grafik(1,1);
             addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
@@ -66,8 +69,12 @@ public class Main {
             @Override
             public void paintComponent(final Graphics g) {
                 super.paintComponent(g);
-                stars.forEach((e)->e.bilden(g));
-
+                stars.forEach((e)->e.staren(g));
+                try {
+                    gubben.gubben(g);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             public Dimension getPreferredSize() {
