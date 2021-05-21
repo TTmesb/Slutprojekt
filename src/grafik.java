@@ -23,7 +23,7 @@ public class grafik {
 
     public void gubben(Graphics g) throws IOException {
         final BufferedImage gubben = ImageIO.read(new File("C:\\Code\\programmering\\Slutprojekt\\src\\pigpogabdul.png"));
-        g.drawImage(gubben,x,y,null);
+        g.drawImage(gubben,0,0,null);
     }
 }
 

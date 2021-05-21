@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -35,7 +37,6 @@ public class Main {
         int veckanu = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1; //ibland behövs -1 och ibland inte??
 
         vecka.setText(String.valueOf(veckanu));
-
         panel.add(vecka);
         frame.add(panel);
         // frame.add(vecka);
@@ -46,9 +47,20 @@ public class Main {
         public static class MyPanel extends JPanel {
         private LinkedList<grafik> stars;
         private grafik gubben;
+        private int xv, xy;
+
         public MyPanel(){
             stars = new LinkedList<>();
-            gubben = new grafik(1,1);
+            gubben = new grafik(xv,xy);
+            xv = 1;
+            xy = 1;
+            addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if(e.getKeyChar()=='d');
+                    xv = +10;
+                }
+            });
             addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
