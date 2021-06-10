@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.LinkedList;
@@ -31,7 +34,7 @@ public class Main {
         vecka.setFont(new Font("Arial, serif", Font.BOLD,260));
         vecka.setForeground(new Color(28, 123, 183));
 
-        int veckanu = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1;
+        int veckanu = datum.get(ChronoField.ALIGNED_WEEK_OF_YEAR)-1; //ibland behövs -1 och ibland inte??
 
         vecka.setText(String.valueOf(veckanu));
         panel.add(vecka);
@@ -42,15 +45,35 @@ public class Main {
         frame.setVisible(true);
     }
         public static class MyPanel extends JPanel {
-        private LinkedList<star> stars;
+        private LinkedList<grafik> stars;
+        private grafik gubben;
+        private int xv, xy;
+
         public MyPanel(){
             stars = new LinkedList<>();
-            addMouseListener(new MouseAdapter() {
+            gubben = new grafik(xv,xy);
+            xv = 1;
+            xy = 1;
+            addKeyListener(new KeyAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    stars.add(new star(e.getX(),e.getY()));
+                public void keyPressed(KeyEvent e) {
+                    if(e.getKeyChar()=='d');
+                    xv = +10;
+                }
+            });
+            addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    stars.add(new grafik(e.getX()-20,e.getY()-20));
                     MyPanel.this.repaint();
                 }
+            });
+            addMouseListener(new MouseAdapter() {
+            @Override
+                public void mouseClicked(MouseEvent k){
+                stars.add(new grafik(k.getX()-10,k.getY()-10));
+                MyPanel.this.repaint();
+            }
             });
 
         }
@@ -58,8 +81,12 @@ public class Main {
             @Override
             public void paintComponent(final Graphics g) {
                 super.paintComponent(g);
-                stars.stream().forEach((e)->e.render(g));
-
+                stars.forEach((e)->e.staren(g));
+                try {
+                    gubben.gubben(g);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             public Dimension getPreferredSize() {
@@ -69,5 +96,7 @@ public class Main {
             public void getContentPane() {
             setBackground(new Color(144, 192, 222));
             }
+
         }
+
 }
